@@ -29,18 +29,22 @@ npx skills add Aethis-ai/aethis-skills --list
 
 ## Required tools
 
-These skills assume the runtime has Aethis MCP tools available, including:
+These skills assume the runtime has Aethis MCP tools available.
+The canonical list is maintained in [`tools.json`](tools.json).
 
-- `aethis_list_projects`
-- `aethis_list_bundles`
-- `aethis_create_bundle`
-- `aethis_generate_and_test`
-- `aethis_refine`
-- `aethis_publish`
-- `aethis_schema`
-- `aethis_decide`
-- `aethis_explain`
-- `aethis_next_question`
+**Author tools**: `aethis_list_projects`, `aethis_create_bundle`, `aethis_generate_and_test`, `aethis_refine`, `aethis_add_guidance`, `aethis_generate`, `aethis_publish`
+
+**Decide tools**: `aethis_list_bundles`, `aethis_decide`, `aethis_schema`, `aethis_next_question`, `aethis_explain`
+
+## Keeping tools in sync
+
+`tools.json` is the single source of truth for which MCP tools the skills depend on. Run the check locally or in CI:
+
+```bash
+npm run check
+```
+
+This verifies every `aethis_*` reference in `SKILL.md` files is declared in `tools.json`. When `aethis-mcp` adds or renames a tool, update `tools.json` first — the check will catch any SKILL.md files that reference undeclared tools.
 
 ## Design principles
 
