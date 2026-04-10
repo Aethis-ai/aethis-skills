@@ -20,8 +20,7 @@ Use this skill when the user wants to start rule authoring from legislation, pol
 3. Call `aethis_discover_fields` to extract input fields from source text. Review the completeness score and missing pathways.
    - If fields are missing or misnamed, call `aethis_refine_fields` with targeted feedback.
    - Repeat until recommendation is `stop` or completeness is satisfactory.
-4. Write test cases using the EXACT field names from discovery. Add or update tests with `aethis_update_test`.
-   - Use `aethis_list_tests` to verify current test state.
+4. Write test cases using the EXACT field names from discovery. Include them in the `aethis_create_bundle` call or add them by recreating the bundle.
 5. Persist identifiers from tool output and report them explicitly:
    - `project_id`
    - `bundle_id`

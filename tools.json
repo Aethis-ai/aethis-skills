@@ -5,100 +5,134 @@
     "decide": {
       "aethis_decide": {
         "auth": "none",
-        "description": "Evaluate eligibility against a published rule bundle"
+        "description": "Evaluate eligibility against a published rule bundle",
+        "required_params": ["bundle_id", "field_values"],
+        "optional_params": ["include_trace", "include_explanation"]
       },
       "aethis_schema": {
         "auth": "none",
-        "description": "Get input fields required for an eligibility check"
+        "description": "Get input fields required for an eligibility check",
+        "required_params": ["bundle_id"]
       },
       "aethis_next_question": {
         "auth": "none",
-        "description": "Get optimal next question for conversational eligibility"
+        "description": "Get optimal next question for conversational eligibility",
+        "required_params": ["bundle_id", "field_values"]
       },
       "aethis_explain": {
         "auth": "none",
-        "description": "Get human-readable rule descriptions"
+        "description": "Get human-readable rule descriptions",
+        "required_params": ["bundle_id"]
       }
     },
     "discover": {
       "aethis_list_projects": {
         "auth": "required",
-        "description": "List all projects in the current tenant"
+        "description": "List all projects in the current tenant",
+        "required_params": []
       },
       "aethis_list_bundles": {
         "auth": "required",
-        "description": "List rule bundles for a project with version history"
+        "description": "List rule bundles for a project with version history",
+        "required_params": ["project_id"]
       },
       "aethis_project_status": {
         "auth": "required",
-        "description": "Check status of a project and its latest generation job"
+        "description": "Check status of a project and its latest generation job",
+        "required_params": ["project_id"]
       }
     },
     "author": {
       "aethis_create_bundle": {
         "auth": "required",
-        "description": "Create a rule bundle with source text and test cases (TDD)"
+        "description": "Create a rule bundle with source text and test cases (TDD)",
+        "required_params": ["name", "section_id", "source_text", "test_cases"],
+        "optional_params": ["domain"]
       },
       "aethis_discover_fields": {
         "auth": "required",
         "llm_key": true,
-        "description": "Extract input fields from source text before writing tests"
+        "description": "Extract input fields from source text before writing tests",
+        "required_params": ["project_id"],
+        "optional_params": ["anthropic_key", "openai_key"]
       },
       "aethis_refine_fields": {
         "auth": "required",
         "llm_key": true,
-        "description": "Improve field discovery with targeted feedback"
+        "description": "Improve field discovery with targeted feedback",
+        "required_params": ["project_id", "feedback"],
+        "optional_params": ["anthropic_key", "openai_key"]
       },
       "aethis_add_guidance": {
         "auth": "required",
-        "description": "Add domain knowledge not in the source text"
+        "description": "Add domain knowledge not in the source text",
+        "required_params": ["project_id", "guidance_text"]
       },
       "aethis_generate": {
         "auth": "required",
         "llm_key": true,
-        "description": "Trigger async rule generation (poll with aethis_project_status)"
+        "description": "Trigger async rule generation (poll with aethis_project_status)",
+        "required_params": ["project_id"],
+        "optional_params": ["anthropic_key", "openai_key"]
       },
       "aethis_generate_and_test": {
         "auth": "required",
         "llm_key": true,
-        "description": "Generate rules and run all tests (60-120s, blocking)"
+        "description": "Generate rules and run all tests (60-120s, blocking)",
+        "required_params": ["project_id"],
+        "optional_params": ["anthropic_key", "openai_key"]
       },
       "aethis_refine": {
         "auth": "required",
         "llm_key": true,
-        "description": "Add guidance then regenerate and test in one call"
+        "description": "Add guidance then regenerate and test in one call",
+        "required_params": ["project_id"],
+        "optional_params": ["feedback", "anthropic_key", "openai_key"]
       },
       "aethis_publish": {
         "auth": "required",
-        "description": "Publish latest bundle (validates tests pass first)"
+        "description": "Publish latest bundle (validates tests pass first)",
+        "required_params": ["project_id"],
+        "optional_params": ["force"]
       }
     },
     "tests": {
       "aethis_list_tests": {
         "auth": "required",
-        "description": "List all test cases for a project"
+        "description": "List all test cases for a project",
+        "required_params": ["project_id"],
+        "status": "not_yet_live"
       },
       "aethis_get_test": {
         "auth": "required",
-        "description": "Get a single test case by ID"
+        "description": "Get a single test case by ID",
+        "required_params": ["project_id", "tc_id"],
+        "status": "not_yet_live"
       },
       "aethis_update_test": {
         "auth": "required",
-        "description": "Update a test case (patch semantics)"
+        "description": "Update a test case (patch semantics)",
+        "required_params": ["project_id", "tc_id"],
+        "optional_params": ["name", "field_values", "expected_outcome"],
+        "status": "not_yet_live"
       },
       "aethis_delete_test": {
         "auth": "required",
-        "description": "Delete a test case permanently"
+        "description": "Delete a test case permanently",
+        "required_params": ["project_id", "tc_id"],
+        "status": "not_yet_live"
       }
     },
     "manage": {
       "aethis_archive_project": {
         "auth": "required",
-        "description": "Archive a project (preserved but hidden from listing)"
+        "description": "Archive a project (preserved but hidden from listing)",
+        "required_params": ["project_id"]
       },
       "aethis_archive_bundle": {
         "auth": "required",
-        "description": "Archive a bundle (preserved but excluded from decide)"
+        "description": "Archive a bundle (preserved but excluded from decide)",
+        "required_params": ["bundle_id"]
       }
     }
   }
