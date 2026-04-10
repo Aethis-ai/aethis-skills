@@ -2,21 +2,104 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "description": "MCP tools required by aethis-skills. Keep in sync with aethis-mcp tool registrations.",
   "tools": {
-    "author": [
-      "aethis_list_projects",
-      "aethis_create_bundle",
-      "aethis_generate_and_test",
-      "aethis_refine",
-      "aethis_add_guidance",
-      "aethis_generate",
-      "aethis_publish"
-    ],
-    "decide": [
-      "aethis_list_bundles",
-      "aethis_decide",
-      "aethis_schema",
-      "aethis_next_question",
-      "aethis_explain"
-    ]
+    "decide": {
+      "aethis_decide": {
+        "auth": "none",
+        "description": "Evaluate eligibility against a published rule bundle"
+      },
+      "aethis_schema": {
+        "auth": "none",
+        "description": "Get input fields required for an eligibility check"
+      },
+      "aethis_next_question": {
+        "auth": "none",
+        "description": "Get optimal next question for conversational eligibility"
+      },
+      "aethis_explain": {
+        "auth": "none",
+        "description": "Get human-readable rule descriptions"
+      }
+    },
+    "discover": {
+      "aethis_list_projects": {
+        "auth": "required",
+        "description": "List all projects in the current tenant"
+      },
+      "aethis_list_bundles": {
+        "auth": "required",
+        "description": "List rule bundles for a project with version history"
+      },
+      "aethis_project_status": {
+        "auth": "required",
+        "description": "Check status of a project and its latest generation job"
+      }
+    },
+    "author": {
+      "aethis_create_bundle": {
+        "auth": "required",
+        "description": "Create a rule bundle with source text and test cases (TDD)"
+      },
+      "aethis_discover_fields": {
+        "auth": "required",
+        "llm_key": true,
+        "description": "Extract input fields from source text before writing tests"
+      },
+      "aethis_refine_fields": {
+        "auth": "required",
+        "llm_key": true,
+        "description": "Improve field discovery with targeted feedback"
+      },
+      "aethis_add_guidance": {
+        "auth": "required",
+        "description": "Add domain knowledge not in the source text"
+      },
+      "aethis_generate": {
+        "auth": "required",
+        "llm_key": true,
+        "description": "Trigger async rule generation (poll with aethis_project_status)"
+      },
+      "aethis_generate_and_test": {
+        "auth": "required",
+        "llm_key": true,
+        "description": "Generate rules and run all tests (60-120s, blocking)"
+      },
+      "aethis_refine": {
+        "auth": "required",
+        "llm_key": true,
+        "description": "Add guidance then regenerate and test in one call"
+      },
+      "aethis_publish": {
+        "auth": "required",
+        "description": "Publish latest bundle (validates tests pass first)"
+      }
+    },
+    "tests": {
+      "aethis_list_tests": {
+        "auth": "required",
+        "description": "List all test cases for a project"
+      },
+      "aethis_get_test": {
+        "auth": "required",
+        "description": "Get a single test case by ID"
+      },
+      "aethis_update_test": {
+        "auth": "required",
+        "description": "Update a test case (patch semantics)"
+      },
+      "aethis_delete_test": {
+        "auth": "required",
+        "description": "Delete a test case permanently"
+      }
+    },
+    "manage": {
+      "aethis_archive_project": {
+        "auth": "required",
+        "description": "Archive a project (preserved but hidden from listing)"
+      },
+      "aethis_archive_bundle": {
+        "auth": "required",
+        "description": "Archive a bundle (preserved but excluded from decide)"
+      }
+    }
   }
 }

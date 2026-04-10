@@ -1,6 +1,6 @@
 ---
 name: policy-to-bundle
-description: Create or reuse an Aethis project, define test-first scenarios, and create a rules bundle from policy text.
+description: Create or reuse an Aethis project, discover fields, define test-first scenarios, and create a rules bundle from policy text.
 ---
 
 # Policy To Bundle
@@ -17,10 +17,15 @@ Use this skill when the user wants to start rule authoring from legislation, pol
    - `section_id`
    - `source_text`
    - `test_cases` (at least 2-3, including one edge case)
-3. Persist identifiers from tool output and report them explicitly:
+3. Call `aethis_discover_fields` to extract input fields from source text. Review the completeness score and missing pathways.
+   - If fields are missing or misnamed, call `aethis_refine_fields` with targeted feedback.
+   - Repeat until recommendation is `stop` or completeness is satisfactory.
+4. Write test cases using the EXACT field names from discovery. Add or update tests with `aethis_update_test`.
+   - Use `aethis_list_tests` to verify current test state.
+5. Persist identifiers from tool output and report them explicitly:
    - `project_id`
    - `bundle_id`
-4. Confirm the next action is `aethis_generate_and_test` for this exact `project_id`.
+6. Confirm the next action is `aethis_generate_and_test` for this exact `project_id`.
 
 ## Guardrails
 
