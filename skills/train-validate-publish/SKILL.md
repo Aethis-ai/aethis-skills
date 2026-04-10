@@ -11,12 +11,13 @@ Use this skill after bundle creation when the user wants executable rules and a 
 
 ## Steps
 
-1. Run `aethis_generate_and_test` with the exact `project_id`.
-2. Inspect failing tests and refine with `aethis_refine` using policy-specific guidance.
-3. Repeat refine cycles until all required tests pass.
-4. Call `aethis_publish` only after tests are fully passing.
-5. Run a smoke decision with `aethis_decide` using one known passing test case.
-6. Report publish result and the bundle/version identifiers used.
+1. Run `aethis_generate_and_test` with the exact `project_id`. This blocks for 60-120 seconds.
+2. Inspect the test results returned by `aethis_generate_and_test` (shows PASS/FAIL per test with expected vs actual).
+3. If tests fail, refine with `aethis_refine` using policy-specific guidance.
+4. Repeat refine cycles until all required tests pass.
+5. Call `aethis_publish` only after tests are fully passing.
+6. Run a smoke decision with `aethis_decide` using one known passing test case.
+7. Report publish result and the bundle/version identifiers used.
 
 ## Guardrails
 
