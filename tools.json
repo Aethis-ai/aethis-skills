@@ -35,11 +35,6 @@
         "auth": "required",
         "description": "List rule bundles for a project with version history",
         "required_params": ["project_id"]
-      },
-      "aethis_project_status": {
-        "auth": "required",
-        "description": "Check status of a project and its latest generation job",
-        "required_params": ["project_id"]
       }
     },
     "author": {
@@ -68,13 +63,6 @@
         "description": "Add domain knowledge not in the source text",
         "required_params": ["project_id", "guidance_text"]
       },
-      "aethis_generate": {
-        "auth": "required",
-        "llm_key": true,
-        "description": "Trigger async rule generation (poll with aethis_project_status)",
-        "required_params": ["project_id"],
-        "optional_params": ["anthropic_key", "openai_key"]
-      },
       "aethis_generate_and_test": {
         "auth": "required",
         "llm_key": true,
@@ -94,33 +82,6 @@
         "description": "Publish latest bundle (validates tests pass first)",
         "required_params": ["project_id"],
         "optional_params": ["force"]
-      }
-    },
-    "tests": {
-      "aethis_list_tests": {
-        "auth": "required",
-        "description": "List all test cases for a project",
-        "required_params": ["project_id"],
-        "status": "not_yet_live"
-      },
-      "aethis_get_test": {
-        "auth": "required",
-        "description": "Get a single test case by ID",
-        "required_params": ["project_id", "tc_id"],
-        "status": "not_yet_live"
-      },
-      "aethis_update_test": {
-        "auth": "required",
-        "description": "Update a test case (patch semantics)",
-        "required_params": ["project_id", "tc_id"],
-        "optional_params": ["name", "field_values", "expected_outcome"],
-        "status": "not_yet_live"
-      },
-      "aethis_delete_test": {
-        "auth": "required",
-        "description": "Delete a test case permanently",
-        "required_params": ["project_id", "tc_id"],
-        "status": "not_yet_live"
       }
     },
     "manage": {
