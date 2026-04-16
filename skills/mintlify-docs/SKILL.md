@@ -9,7 +9,12 @@ Manages the Aethis documentation site at `mintlify-docs/` (Aethis-ai/docs on Git
 
 ## Prerequisites
 
-- `MINTLIFY_API_KEY` secret — generate from [Mintlify dashboard](https://dashboard.mintlify.com) under Settings > API Keys, then add with `./scripts/secrets push MINTLIFY_API_KEY <value>`
+- `MINTLIFY_API_KEY` secret — generate from [Mintlify dashboard](https://dashboard.mintlify.com) under Settings > API Keys, then add:
+  ```bash
+  echo "MINTLIFY_API_KEY=<value>" > /tmp/mintlify.env
+  ./scripts/secrets --project okbackend1 --service mintlify-docs push --env-file /tmp/mintlify.env --create-missing --apply
+  rm /tmp/mintlify.env
+  ```
 
 ## Common tasks
 
