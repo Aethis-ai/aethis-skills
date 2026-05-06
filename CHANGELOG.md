@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.2 (2026-05-06)
+- docs: add private-beta callout for authoring skills (decide-with-trace remains public)
+
 ## 0.2.1 (2026-05-06)
 
 - docs: align README with positioning bible — add developer one-liner and TDD beat intro
