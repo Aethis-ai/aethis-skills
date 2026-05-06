@@ -22,7 +22,7 @@ npx skills add Aethis-ai/aethis-skills --list
 
 ## Included skills
 
-- `policy-to-bundle`: turns source policy text into a test-first rule bundle with field discovery.
+- `policy-to-ruleset`: turns source policy text into a test-first ruleset with field discovery.
 - `train-validate-publish`: runs generation/refinement loops and publish safety checks.
 - `decide-with-trace`: executes deterministic decisions with trace/explanation output.
 - `regression-compare`: compares versions with a stable decision corpus.
@@ -36,9 +36,9 @@ The canonical tool manifest is maintained in [`tools.json`](tools.json), organis
 | Group | Tools | Auth | LLM key |
 |-------|-------|------|---------|
 | **decide** | `aethis_decide`, `aethis_schema`, `aethis_next_question`, `aethis_explain` | none | no |
-| **discover** | `aethis_list_projects`, `aethis_list_bundles` | required | no |
-| **author** | `aethis_create_bundle`, `aethis_discover_fields`, `aethis_refine_fields`, `aethis_add_guidance`, `aethis_generate_and_test`, `aethis_refine`, `aethis_publish` | required | some |
-| **manage** | `aethis_archive_project`, `aethis_archive_bundle` | required | no |
+| **discover** | `aethis_list_projects`, `aethis_list_rulesets` | required | no |
+| **author** | `aethis_create_ruleset`, `aethis_discover_fields`, `aethis_refine_fields`, `aethis_add_guidance`, `aethis_generate_and_test`, `aethis_refine`, `aethis_publish` | required | some |
+| **manage** | `aethis_archive_project`, `aethis_archive_ruleset` | required | no |
 
 Tools marked `llm_key: true` in `tools.json` require an `anthropic_key` parameter for LLM generation.
 

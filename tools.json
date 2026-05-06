@@ -5,24 +5,24 @@
     "decide": {
       "aethis_decide": {
         "auth": "none",
-        "description": "Evaluate eligibility against a published rule bundle",
-        "required_params": ["bundle_id", "field_values"],
+        "description": "Evaluate eligibility against a published ruleset",
+        "required_params": ["ruleset_id", "field_values"],
         "optional_params": ["include_trace", "include_explanation"]
       },
       "aethis_schema": {
         "auth": "none",
         "description": "Get input fields required for an eligibility check",
-        "required_params": ["bundle_id"]
+        "required_params": ["ruleset_id"]
       },
       "aethis_next_question": {
         "auth": "none",
         "description": "Get optimal next question for conversational eligibility",
-        "required_params": ["bundle_id", "field_values"]
+        "required_params": ["ruleset_id", "field_values"]
       },
       "aethis_explain": {
         "auth": "none",
         "description": "Get human-readable rule descriptions",
-        "required_params": ["bundle_id"]
+        "required_params": ["ruleset_id"]
       }
     },
     "discover": {
@@ -31,16 +31,16 @@
         "description": "List all projects in the current tenant",
         "required_params": []
       },
-      "aethis_list_bundles": {
+      "aethis_list_rulesets": {
         "auth": "required",
-        "description": "List rule bundles for a project with version history",
+        "description": "List rulesets for a project with version history",
         "required_params": ["project_id"]
       }
     },
     "author": {
-      "aethis_create_bundle": {
+      "aethis_create_ruleset": {
         "auth": "required",
-        "description": "Create a rule bundle with source text and test cases (TDD)",
+        "description": "Create a ruleset with source text and test cases (TDD)",
         "required_params": ["name", "section_id", "source_text", "test_cases"],
         "optional_params": ["domain"]
       },
@@ -79,7 +79,7 @@
       },
       "aethis_publish": {
         "auth": "required",
-        "description": "Publish latest bundle (validates tests pass first)",
+        "description": "Publish latest ruleset (validates tests pass first)",
         "required_params": ["project_id"],
         "optional_params": ["force"]
       }
@@ -90,10 +90,10 @@
         "description": "Archive a project (preserved but hidden from listing)",
         "required_params": ["project_id"]
       },
-      "aethis_archive_bundle": {
+      "aethis_archive_ruleset": {
         "auth": "required",
-        "description": "Archive a bundle (preserved but excluded from decide)",
-        "required_params": ["bundle_id"]
+        "description": "Archive a ruleset (preserved but excluded from decide)",
+        "required_params": ["ruleset_id"]
       }
     }
   }

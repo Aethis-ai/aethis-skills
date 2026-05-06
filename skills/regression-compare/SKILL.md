@@ -11,7 +11,7 @@ Use this skill when validating a new rule version against a baseline before or a
 
 ## Steps
 
-1. Define baseline and candidate bundle/version IDs explicitly.
+1. Define baseline and candidate ruleset/version IDs explicitly.
 2. Collect a stable corpus of representative field-value payloads.
 3. Execute `aethis_decide` for each payload against both versions.
 4. Compare outcomes and classify each case:

@@ -1,13 +1,13 @@
 ---
 name: train-validate-publish
-description: Train a rules bundle with iterative guidance, validate outcomes, and publish only when tests are green.
+description: Train a rules ruleset with iterative guidance, validate outcomes, and publish only when tests are green.
 ---
 
 # Train Validate Publish
 
 ## When to use
 
-Use this skill after bundle creation when the user wants executable rules and a published active version.
+Use this skill after ruleset creation when the user wants executable rules and a published active version.
 
 ## Steps
 
@@ -17,7 +17,7 @@ Use this skill after bundle creation when the user wants executable rules and a 
 4. Repeat refine cycles until all required tests pass.
 5. Call `aethis_publish` only after tests are fully passing.
 6. Run a smoke decision with `aethis_decide` using one known passing test case.
-7. Report publish result and the bundle/version identifiers used.
+7. Report publish result and the ruleset/version identifiers used.
 
 ## Guardrails
 
