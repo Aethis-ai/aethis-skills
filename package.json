@@ -1,6 +1,6 @@
 {
   "name": "@aethis-ai/aethis-skills",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Agent skills for the Aethis policy-to-decision lifecycle",
   "license": "MIT",
   "repository": {

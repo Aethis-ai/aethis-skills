@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.3 (2026-05-06)
+- docs: trim positioning intro to one factual line — reference surface (per aethis.os/positioning/surface-types.md)
+
 ## 0.2.2 (2026-05-06)
 - docs: add private-beta callout for authoring skills (decide-with-trace remains public)
 

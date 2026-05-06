@@ -1,8 +1,6 @@
 # aethis-skills
 
-<!-- aethis-bible: public-messaging.md#1-the-one-liner -->
-<!-- aethis-bible: public-messaging.md#5-how-rule-authoring-works -->
-Aethis is a verified-decision API: same input, same answer, every time, with a full audit trail. Subject matter experts write the tests. Language models generate the rules that pass them. These skills implement that authoring workflow for your coding agent.
+Skills that implement the Aethis authoring TDD loop and decision lookup for your coding agent.
 
 > **Authoring is in private beta.** The `decide-with-trace` skill is public (no key required). The authoring skills (`policy-to-ruleset`, `train-validate-publish`, `regression-compare`) require an invited developer key. Request access at [aethis.ai/developer-access](https://aethis.ai/developer-access).
 
