@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.4 (2026-05-07)
+- docs: link to docs.aethis.ai/agents/onboarding from intro
+
 ## 0.2.3 (2026-05-06)
 - docs: trim positioning intro to one factual line — reference surface (per aethis.os/positioning/surface-types.md)
 
