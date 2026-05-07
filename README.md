@@ -4,6 +4,8 @@ Skills that implement the Aethis authoring TDD loop and decision lookup for your
 
 > **Authoring is in private beta.** The `decide-with-trace` skill is public (no key required). The authoring skills (`policy-to-ruleset`, `train-validate-publish`, `regression-compare`) require an invited developer key. Request access at [aethis.ai/developer-access](https://aethis.ai/developer-access).
 
+> Onboarding end-to-end? See [docs.aethis.ai/agents/onboarding](https://docs.aethis.ai/agents/onboarding) — install + verify + auth + workflow patterns in one page.
+
 Agent skills for the Aethis policy-to-decision lifecycle.
 
 ## Install
