@@ -1,0 +1,32 @@
+{
+  "name": "@aethis-ai/aethis-skills",
+  "version": "0.2.5",
+  "description": "Agent skills for the Aethis policy-to-decision lifecycle",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aethis-ai/aethis-skills.git"
+  },
+  "scripts": {
+    "check": "./scripts/check-tool-surface.sh"
+  },
+  "files": [
+    "CHANGELOG.md",
+    "LICENSE",
+    "README.md",
+    "tools.json",
+    "scripts/check-tool-surface.sh",
+    "skills/decide-with-trace/SKILL.md",
+    "skills/policy-to-ruleset/SKILL.md",
+    "skills/regression-compare/SKILL.md",
+    "skills/train-validate-publish/SKILL.md"
+  ],
+  "keywords": [
+    "aethis",
+    "skills",
+    "mcp",
+    "eligibility",
+    "rules-engine",
+    "ai-agent"
+  ]
+}
