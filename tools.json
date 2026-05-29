@@ -73,7 +73,7 @@
       "aethis_refine": {
         "auth": "required",
         "llm_key": true,
-        "description": "Add guidance then regenerate and test in one call",
+        "description": "Add optional guidance then make the minimal edit to fix failing tests, seeded from the section's active ruleset (incremental re-authoring), and re-run the full suite",
         "required_params": ["project_id"],
         "optional_params": ["feedback", "anthropic_key", "openai_key"]
       },
