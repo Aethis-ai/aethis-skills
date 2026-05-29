@@ -13,7 +13,7 @@ Use this skill after ruleset creation when the user wants executable rules and a
 
 1. Run `aethis_generate_and_test` with the exact `project_id`. This blocks for 60-120 seconds.
 2. Inspect the test results returned by `aethis_generate_and_test` (shows PASS/FAIL per test with expected vs actual).
-3. If tests fail, refine with `aethis_refine` using policy-specific guidance.
+3. If tests fail, call `aethis_refine` with policy-specific guidance. Refine seeds from the section's active ruleset and makes the minimal edit to fix the failing tests while keeping passing tests green — not a from-scratch rebuild.
 4. Repeat refine cycles until all required tests pass.
 5. Call `aethis_publish` only after tests are fully passing.
 6. Run a smoke decision with `aethis_decide` using one known passing test case.

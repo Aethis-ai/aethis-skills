@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.3.0 (2026-05-29)
+- docs: `aethis_refine` now describes incremental seed-from-existing semantics — it makes the minimal edit to fix failing tests (seeded from the section's active ruleset), not a from-scratch rebuild. Updated the `aethis_refine` tool description in `tools.json` and the refine step in the `train-validate-publish` skill to match aethis-mcp v0.9.0 / aethis-core.
+
 ## 0.2.5 (2026-05-12)
 - fix: remove internal-only skills from the public package and add an explicit npm files allowlist
 
