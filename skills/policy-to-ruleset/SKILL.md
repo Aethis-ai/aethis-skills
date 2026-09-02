@@ -33,7 +33,9 @@ Use this skill when the user wants to start rule authoring from legislation, pol
   `aethis_generation_status` before starting another generation. Its job status,
   progress timestamps, and `error_detail.reason_code` determine the next step.
 - Never call `aethis_cancel_generation` automatically. It is only appropriate
-  after the caller explicitly asks to abandon the active run. Cancellation
+  after showing the exact `job_id` from status and receiving fresh caller
+  confirmation to abandon that run. Pass the same value as `job_id` and
+  `confirm_job_id`; a mismatch must make no cancellation request. Cancellation
   releases the project's job ownership; it does not guarantee that a live worker
   or provider request has stopped immediately.
 - Provider keys are bring-your-own and per-call only. Do not persist, repeat, or
@@ -60,7 +62,7 @@ Use this skill when the user wants to start rule authoring from legislation, pol
   the same `project_id`.
 - `provider_unavailable`: wait briefly, inspect status again, then retry with the
   same `project_id` if the job is terminal.
-- `generation_worker_lost`, `generation_not_started`, or a deployed
-  `generation_stalled` equivalent: the job is no longer healthy. Once status is
+- `generation_worker_lost`, `generation_not_started`, or `generation_timeout`:
+  the job is no longer healthy. Once status is
   terminal and project ownership is released, retry with the same `project_id`;
   do not cancel a terminal job.

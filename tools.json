@@ -78,8 +78,8 @@
       "aethis_cancel_generation": {
         "auth": "required",
         "destructive": true,
-        "description": "Explicitly request cancellation of an active generation and release project ownership; this does not guarantee an already-live worker stops immediately",
-        "required_params": ["project_id"]
+        "description": "After fresh operator confirmation, cancel the exact observed generation by matching project_id, job_id, and confirm_job_id; this does not guarantee an already-live worker stops immediately",
+        "required_params": ["project_id", "job_id", "confirm_job_id"]
       },
       "aethis_refine": {
         "auth": "required",

@@ -31,7 +31,9 @@ Use this skill after ruleset creation when the user wants executable rules and a
 - Avoid overfitting; stop refinement when required tests pass.
 - Never publish when tests are failing.
 - Never call `aethis_cancel_generation` as a timeout or retry mechanism. Call it
-  only when the caller explicitly wants to abandon an active job. It releases
+  only after showing the exact status `job_id` and receiving fresh caller
+  confirmation to abandon that job. Pass that value as both `job_id` and
+  `confirm_job_id`; mismatch or missing confirmation makes no request. It releases
   project ownership but does not guarantee that an already-live worker or
   provider request has stopped immediately.
 - Provider keys are BYOK and per-call only. Do not store, echo, or infer a key
@@ -51,7 +53,7 @@ Use this skill after ruleset creation when the user wants executable rules and a
   the same project.
 - `provider_unavailable`: wait briefly, inspect `aethis_generation_status`, and
   retry the same project only after the job is terminal.
-- `generation_worker_lost`, `generation_not_started`, or a deployed
-  `generation_stalled` equivalent: inspect status for the terminal failure and
+- `generation_worker_lost`, `generation_not_started`, or `generation_timeout`:
+  inspect status for the terminal failure and
   released project ownership, then retry the same project. Do not cancel a job
   that is already terminal.
