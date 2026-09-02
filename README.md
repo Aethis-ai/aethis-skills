@@ -50,11 +50,15 @@ Tools marked `llm_key: true` in `tools.json` require an `anthropic_key` paramete
 
 `aethis_generation_status` is read-only and does not need a model-provider key.
 Use it to inspect a generation timeout, lack of progress, or an error before
-retrying. `aethis_cancel_generation` is an explicit, destructive caller choice:
+retrying. Treat `generation_contract_version`, `telemetry_availability`,
+server-authoritative `worker_lifecycle`, and `retry_readiness` as the contract;
+retry only when readiness is `ready`, since an old heartbeat alone does not
+prove worker death. `aethis_cancel_generation` is an explicit, destructive caller choice:
 show the status `job_id`, get fresh confirmation, and pass it as both `job_id`
 and `confirm_job_id`. It releases only that job's ownership but does not guarantee that an already-live worker or
 provider request stops immediately. Neither status nor cancellation stores or
-replays a bring-your-own provider key.
+replays a bring-your-own provider key. Cancellation returns `cancelled` or the
+idempotent `already_cancelled` outcome.
 
 ### Quick setup
 

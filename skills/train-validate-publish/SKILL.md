@@ -25,8 +25,10 @@ Use this skill after ruleset creation when the user wants executable rules and a
 
 ## Guardrails
 
-- Retry only after status says the previous job is terminal or no longer active;
-  use the same IDs and never create duplicate artifacts merely to bypass a run.
+- Require `generation_contract_version: 1` and retry only when status reports
+  `retry_readiness: ready`; use the server-authoritative `worker_lifecycle` and
+  `telemetry_availability` rather than inferring worker death from heartbeat age.
+  Use the same IDs and never create duplicate artifacts merely to bypass a run.
 - Keep guidance narrow and tied to failing test names or clauses.
 - Avoid overfitting; stop refinement when required tests pass.
 - Never publish when tests are failing.
@@ -35,7 +37,8 @@ Use this skill after ruleset creation when the user wants executable rules and a
   confirmation to abandon that job. Pass that value as both `job_id` and
   `confirm_job_id`; mismatch or missing confirmation makes no request. It releases
   project ownership but does not guarantee that an already-live worker or
-  provider request has stopped immediately.
+  provider request has stopped immediately. Both `cancelled` and idempotent
+  `already_cancelled` resolve that exact cancellation request.
 - Provider keys are BYOK and per-call only. Do not store, echo, or infer a key
   from a status/cancellation response; reuse the caller's secure per-call key
   reference only for a requested retry.

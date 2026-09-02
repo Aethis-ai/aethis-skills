@@ -72,13 +72,13 @@
       },
       "aethis_generation_status": {
         "auth": "required",
-        "description": "Inspect the current or most recent generation job, including progress and safe failure diagnostics",
+        "description": "Inspect generation contract version, telemetry availability, server-authoritative worker lifecycle, retry readiness, progress, and safe failure diagnostics",
         "required_params": ["project_id"]
       },
       "aethis_cancel_generation": {
         "auth": "required",
         "destructive": true,
-        "description": "After fresh operator confirmation, cancel the exact observed generation by matching project_id, job_id, and confirm_job_id; this does not guarantee an already-live worker stops immediately",
+        "description": "After fresh operator confirmation, cancel the exact observed generation by matching project_id, job_id, and confirm_job_id; returns cancelled or idempotent already_cancelled and does not guarantee an already-live worker stops immediately",
         "required_params": ["project_id", "job_id", "confirm_job_id"]
       },
       "aethis_refine": {

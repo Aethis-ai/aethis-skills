@@ -30,14 +30,19 @@ Use this skill when the user wants to start rule authoring from legislation, pol
 
 - Keep the exact `project_id` while generation is in progress. If a generation
   call times out, appears stalled, or returns a failure, call
-  `aethis_generation_status` before starting another generation. Its job status,
-  progress timestamps, and `error_detail.reason_code` determine the next step.
+  `aethis_generation_status` before starting another generation. Require
+  `generation_contract_version: 1`, then use `telemetry_availability`, the
+  server-authoritative `worker_lifecycle`, and `retry_readiness` to determine
+  the next step. Retry only when readiness is `ready`; an old heartbeat alone
+  does not prove worker death.
 - Never call `aethis_cancel_generation` automatically. It is only appropriate
   after showing the exact `job_id` from status and receiving fresh caller
   confirmation to abandon that run. Pass the same value as `job_id` and
   `confirm_job_id`; a mismatch must make no cancellation request. Cancellation
   releases the project's job ownership; it does not guarantee that a live worker
-  or provider request has stopped immediately.
+  or provider request has stopped immediately. Treat both `cancelled` and the
+  idempotent `already_cancelled` outcome as successful resolution of that exact
+  cancellation request.
 - Provider keys are bring-your-own and per-call only. Do not persist, repeat, or
   surface a supplied key in status, cancellation, or reports. Use the caller's
   normal secure per-call key reference again only when retrying generation.
