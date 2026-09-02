@@ -26,6 +26,20 @@ Use this skill when the user wants to start rule authoring from legislation, pol
    - `ruleset_id`
 6. Confirm the next action is `aethis_generate_and_test` for this exact `project_id`.
 
+## Generation monitoring and recovery
+
+- Keep the exact `project_id` while generation is in progress. If a generation
+  call times out, appears stalled, or returns a failure, call
+  `aethis_generation_status` before starting another generation. Its job status,
+  progress timestamps, and `error_detail.reason_code` determine the next step.
+- Never call `aethis_cancel_generation` automatically. It is only appropriate
+  after the caller explicitly asks to abandon the active run. Cancellation
+  releases the project's job ownership; it does not guarantee that a live worker
+  or provider request has stopped immediately.
+- Provider keys are bring-your-own and per-call only. Do not persist, repeat, or
+  surface a supplied key in status, cancellation, or reports. Use the caller's
+  normal secure per-call key reference again only when retrying generation.
+
 ## Guardrails
 
 - Be deterministic: once IDs exist, never switch targets by name matching.
@@ -38,3 +52,15 @@ Use this skill when the user wants to start rule authoring from legislation, pol
 - `auth_error`: stop and ask the user to restore Aethis authentication.
 - `validation_error`: request only missing or invalid fields.
 - `not_found`: rerun project discovery before creating new artifacts.
+- `provider_capacity_exhausted`: ask the caller to restore provider credit or
+  capacity before retrying; do not spin retries.
+- `provider_authentication_failed`: ask the caller to correct or replace the
+  per-call provider key, then retry with the same `project_id`.
+- `provider_rate_limited`: wait for the provider limit to reset, then retry with
+  the same `project_id`.
+- `provider_unavailable`: wait briefly, inspect status again, then retry with the
+  same `project_id` if the job is terminal.
+- `generation_worker_lost`, `generation_not_started`, or a deployed
+  `generation_stalled` equivalent: the job is no longer healthy. Once status is
+  terminal and project ownership is released, retry with the same `project_id`;
+  do not cancel a terminal job.

@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0 (2026-09-02)
+
+- feat: add `aethis_generation_status` and explicit-only
+  `aethis_cancel_generation` guidance to the public authoring skills. Generation
+  recovery now diagnoses progress and safe provider/lifecycle failure codes
+  before retrying, preserves per-call BYOK ephemerality, and never treats
+  cancellation as a guaranteed live-worker stop.
+
 ## 0.3.0 (2026-05-29)
 - docs: `aethis_refine` now describes incremental seed-from-existing semantics — it makes the minimal edit to fix failing tests (seeded from the section's active ruleset), not a from-scratch rebuild. Updated the `aethis_refine` tool description in `tools.json` and the refine step in the `train-validate-publish` skill to match aethis-mcp v0.9.0 / aethis-core.
 
