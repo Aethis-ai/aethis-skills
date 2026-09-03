@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.4.0 (2026-09-03)
+
+- feat: add `aethis_generation_status` and explicit-only
+  `aethis_cancel_generation` guidance to the public authoring skills. Generation
+  recovery now diagnoses progress and safe provider/lifecycle failure codes
+  before retrying, preserves per-call BYOK ephemerality, and never treats
+  cancellation as a guaranteed live-worker stop. Cancellation now requires the
+  exact observed job id repeated after fresh operator confirmation, so a delayed
+  request cannot target a successor run. Recovery guidance consumes the v1
+  telemetry-availability, server-authoritative worker-lifecycle, and
+  retry-readiness fields; retry requires `ready`, while cancellation accepts
+  both `cancelled` and idempotent `already_cancelled` outcomes.
+- fix: make MCP source availability mandatory in CI and check the skills
+  manifest against a checked-out `aethis-mcp` source tree, while retaining a
+  warning-only standalone developer check when that sibling is absent.
+
 ## 0.3.0 (2026-05-29)
 - docs: `aethis_refine` now describes incremental seed-from-existing semantics — it makes the minimal edit to fix failing tests (seeded from the section's active ruleset), not a from-scratch rebuild. Updated the `aethis_refine` tool description in `tools.json` and the refine step in the `train-validate-publish` skill to match aethis-mcp v0.9.0 / aethis-core.
 

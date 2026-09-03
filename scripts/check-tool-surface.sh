@@ -92,7 +92,15 @@ if [ -f "$MCP_SRC" ]; then
     fi
   fi
 else
-  echo "SKIP: aethis-mcp source not found at $MCP_SRC (drift detection skipped)"
+  case "${CI:-}" in
+    1|true|TRUE|yes|YES)
+      echo "ERROR: aethis-mcp source not found at $MCP_SRC (CI may not skip drift detection)"
+      errors=1
+      ;;
+    *)
+      echo "WARN: aethis-mcp source not found at $MCP_SRC (local drift detection skipped)"
+      ;;
+  esac
 fi
 
 # ---------------------------------------------------------------------------

@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  tool-surface:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out skills
+        uses: actions/checkout@v4
+
+      - name: Check out MCP source of truth
+        uses: actions/checkout@v4
+        with:
+          repository: Aethis-ai/aethis-mcp
+          path: upstream/aethis-mcp
+
+      - name: Verify public skill and MCP tool surfaces agree
+        env:
+          AETHIS_MCP_SRC: upstream/aethis-mcp/src/index.ts
+        run: npm run check

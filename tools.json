@@ -66,9 +66,20 @@
       "aethis_generate_and_test": {
         "auth": "required",
         "llm_key": true,
-        "description": "Generate rules and run all tests (60-120s, blocking)",
+        "description": "Generate rules and run all tests (usually 60-120s); inspect generation status before retrying a timeout",
         "required_params": ["project_id"],
         "optional_params": ["anthropic_key", "openai_key"]
+      },
+      "aethis_generation_status": {
+        "auth": "required",
+        "description": "Inspect generation contract version, telemetry availability, server-authoritative worker lifecycle, retry readiness, progress, and safe failure diagnostics",
+        "required_params": ["project_id"]
+      },
+      "aethis_cancel_generation": {
+        "auth": "required",
+        "destructive": true,
+        "description": "After fresh operator confirmation, cancel the exact observed generation by matching project_id, job_id, and confirm_job_id; returns cancelled or idempotent already_cancelled and does not guarantee an already-live worker stops immediately",
+        "required_params": ["project_id", "job_id", "confirm_job_id"]
       },
       "aethis_refine": {
         "auth": "required",
