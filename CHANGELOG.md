@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.0 (2026-09-02)
+## 0.4.0 (2026-09-03)
 
 - feat: add `aethis_generation_status` and explicit-only
   `aethis_cancel_generation` guidance to the public authoring skills. Generation

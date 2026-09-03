@@ -65,9 +65,15 @@ Use this skill when the user wants to start rule authoring from legislation, pol
   per-call provider key, then retry with the same `project_id`.
 - `provider_rate_limited`: wait for the provider limit to reset, then retry with
   the same `project_id`.
+- `provider_request_rejected`: correct the rejected request or provider setup
+  before retrying; do not repeat the unchanged request.
 - `provider_unavailable`: wait briefly, inspect status again, then retry with the
   same `project_id` if the job is terminal.
-- `generation_worker_lost`, `generation_not_started`, or `generation_timeout`:
-  the job is no longer healthy. Once status is
+- `generation_worker_lost`, `generation_not_started`,
+  `generation_deadline_exceeded`, or `generation_timeout`: the job is no longer
+  healthy. Once status is
   terminal and project ownership is released, retry with the same `project_id`;
   do not cancel a terminal job.
+- For any unrecognised reason code, keep the workflow non-green, show the safe
+  status fields, and stop for operator review. Do not infer retry or cancellation
+  behaviour from an unknown code.

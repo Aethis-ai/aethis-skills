@@ -54,9 +54,15 @@ Use this skill after ruleset creation when the user wants executable rules and a
   provider key reference, then retry the same project.
 - `provider_rate_limited`: wait until the provider limit resets before retrying
   the same project.
+- `provider_request_rejected`: correct the rejected request or provider setup
+  before retrying; do not repeat the unchanged request.
 - `provider_unavailable`: wait briefly, inspect `aethis_generation_status`, and
   retry the same project only after the job is terminal.
-- `generation_worker_lost`, `generation_not_started`, or `generation_timeout`:
-  inspect status for the terminal failure and
+- `generation_worker_lost`, `generation_not_started`,
+  `generation_deadline_exceeded`, or `generation_timeout`: inspect status for
+  the terminal failure and
   released project ownership, then retry the same project. Do not cancel a job
   that is already terminal.
+- For any unrecognised reason code, keep the workflow non-green, show the safe
+  status fields, and stop for operator review. Do not infer retry or cancellation
+  behaviour from an unknown code.
