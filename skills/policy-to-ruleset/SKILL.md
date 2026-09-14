@@ -25,7 +25,7 @@ Use this skill when the user wants to start rule authoring from legislation, pol
 6. Persist identifiers from tool output and report them explicitly:
    - `project_id`
    - `ruleset_id`
-7. Confirm the next action is `aethis_generate_and_test` for this exact `project_id`.
+7. Confirm the next action: call `aethis_generate_and_test` with this exact `project_id`.
 
 ## Generation monitoring and recovery
 
@@ -38,8 +38,7 @@ Use this skill when the user wants to start rule authoring from legislation, pol
   does not prove worker death.
 - Never call `aethis_cancel_generation` automatically. It is only appropriate
   after showing the exact `job_id` from status and receiving fresh caller
-  confirmation to abandon that run. Pass the same value as `job_id` and
-  `confirm_job_id`; a mismatch must make no cancellation request. Cancellation
+  confirmation to abandon that run. Call `aethis_cancel_generation` with exact `project_id` and the same status value as `job_id` and `confirm_job_id`; a mismatch must make no cancellation request. Cancellation
   releases the project's job ownership; it does not guarantee that a live worker
   or provider request has stopped immediately. Treat both `cancelled` and the
   idempotent `already_cancelled` outcome as successful resolution of that exact

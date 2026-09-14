@@ -36,10 +36,8 @@ partial, inferred, truncated, or chunked suite to make a generation pass.
 - Keep guidance narrow and tied to failing test names or clauses.
 - Avoid overfitting; stop refinement when required tests pass.
 - Never publish when tests are failing.
-- Never call `aethis_cancel_generation` as a timeout or retry mechanism. Call it
-  only after showing the exact status `job_id` and receiving fresh caller
-  confirmation to abandon that job. Pass that value as both `job_id` and
-  `confirm_job_id`; mismatch or missing confirmation makes no request. It releases
+- Never call `aethis_cancel_generation` as a timeout or retry mechanism. Call
+  `aethis_cancel_generation` only after showing the exact status `job_id` and receiving fresh caller confirmation to abandon that job, with exact `project_id` and that value as both `job_id` and `confirm_job_id`; mismatch or missing confirmation makes no request. It releases
   project ownership but does not guarantee that an already-live worker or
   provider request has stopped immediately. Both `cancelled` and idempotent
   `already_cancelled` resolve that exact cancellation request.

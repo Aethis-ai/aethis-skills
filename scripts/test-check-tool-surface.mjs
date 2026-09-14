@@ -77,6 +77,18 @@ try {
     const path = join(skillsRoot, "skills", "policy-to-ruleset", "SKILL.md");
     writeFileSync(path, readFileSync(path, "utf8").replace("`aethis_set_tests` once", "`aethis_set_tests(project_id, replacement_cases)` once"));
   });
+  check("visible-next-generation-parameter", completeInventory, 1, (skillsRoot) => {
+    const path = join(skillsRoot, "skills", "policy-to-ruleset", "SKILL.md");
+    writeFileSync(path, readFileSync(path, "utf8").replace("with this exact `project_id`", "with this exact `replacement_project_id`"));
+  });
+  check("visible-policy-cancel-confirmation", completeInventory, 1, (skillsRoot) => {
+    const path = join(skillsRoot, "skills", "policy-to-ruleset", "SKILL.md");
+    writeFileSync(path, readFileSync(path, "utf8").replace("`confirm_job_id`;", "`replacement_confirm_job_id`;"));
+  });
+  check("visible-train-cancel-confirmation", completeInventory, 1, (skillsRoot) => {
+    const path = join(skillsRoot, "skills", "train-validate-publish", "SKILL.md");
+    writeFileSync(path, readFileSync(path, "utf8").replace("`confirm_job_id`;", "`replacement_confirm_job_id`;"));
+  });
   check("visible-provider-key-reference", completeInventory, 1, (skillsRoot) => {
     const path = join(skillsRoot, "skills", "policy-to-ruleset", "SKILL.md");
     writeFileSync(path, readFileSync(path, "utf8").replace("anthropic_key_env", "replacement_key_env"));
