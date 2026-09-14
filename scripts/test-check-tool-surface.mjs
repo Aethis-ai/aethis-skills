@@ -53,21 +53,33 @@ try {
       ? { ...tool, inputSchema: { type: "object", properties: { project_id: {}, anthropic_key_env: {} } } }
       : tool),
   }, 1);
-  check("invalid-skill-parameter", completeInventory, 1, (skillsRoot) => {
+  check("visible-set-tests-parameter", completeInventory, 1, (skillsRoot) => {
     const path = join(skillsRoot, "skills", "policy-to-ruleset", "SKILL.md");
-    writeFileSync(path, readFileSync(path, "utf8").replace("test_cases)", "replacement_cases)"));
+    writeFileSync(path, readFileSync(path, "utf8").replace("complete `test_cases`", "complete `replacement_cases`"));
   });
-  check("missing-multiline-create-parameter", completeInventory, 1, (skillsRoot) => {
+  check("visible-multiline-create-parameter", completeInventory, 1, (skillsRoot) => {
     const path = join(skillsRoot, "skills", "policy-to-ruleset", "SKILL.md");
-    writeFileSync(path, readFileSync(path, "utf8").replace("source_text, test_cases)", "source_text, replacement_cases)"));
+    writeFileSync(path, readFileSync(path, "utf8").replace("- `test_cases` (at least", "- `replacement_cases` (at least"));
   });
-  check("missing-run-parameter", completeInventory, 1, (skillsRoot) => {
+  check("visible-run-parameter", completeInventory, 1, (skillsRoot) => {
     const path = join(skillsRoot, "skills", "train-validate-publish", "SKILL.md");
-    writeFileSync(path, readFileSync(path, "utf8").replace("aethis_generate_and_test(project_id,", "aethis_generate_and_test(replacement_project_id,"));
+    writeFileSync(path, readFileSync(path, "utf8").replace("exact `project_id`. It usually", "exact `replacement_project_id`. It usually"));
   });
-  check("missing-colon-parameter", completeInventory, 1, (skillsRoot) => {
+  check("visible-colon-parameter", completeInventory, 1, (skillsRoot) => {
     const path = join(skillsRoot, "skills", "decide-with-trace", "SKILL.md");
-    writeFileSync(path, readFileSync(path, "utf8").replace("include_trace, include_explanation", "replacement_trace, include_explanation"));
+    writeFileSync(path, readFileSync(path, "utf8").replace("`include_trace: true`", "`replacement_trace: true`"));
+  });
+  check("visible-explicit-call-parameter", completeInventory, 1, (skillsRoot) => {
+    const path = join(skillsRoot, "skills", "policy-to-ruleset", "SKILL.md");
+    writeFileSync(path, readFileSync(path, "utf8").replace("exact `project_id` and complete `test_cases`", "exact `replacement_project_id` and complete `test_cases`"));
+  });
+  check("visible-parenthesized-call-parameter", completeInventory, 1, (skillsRoot) => {
+    const path = join(skillsRoot, "skills", "policy-to-ruleset", "SKILL.md");
+    writeFileSync(path, readFileSync(path, "utf8").replace("`aethis_set_tests` once", "`aethis_set_tests(project_id, replacement_cases)` once"));
+  });
+  check("visible-provider-key-reference", completeInventory, 1, (skillsRoot) => {
+    const path = join(skillsRoot, "skills", "policy-to-ruleset", "SKILL.md");
+    writeFileSync(path, readFileSync(path, "utf8").replace("anthropic_key_env", "replacement_key_env"));
   });
   check("undeclared-skill-tool", completeInventory, 1, (skillsRoot) => {
     const path = join(skillsRoot, "tools.json");

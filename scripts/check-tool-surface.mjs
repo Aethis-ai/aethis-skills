@@ -40,20 +40,27 @@ for (const [name, spec] of declared) {
   if (!fields) { console.error(`ERROR: declared dependency missing from emitted schema: ${name}`); failed = true; continue; }
   for (const parameter of [...(spec.required_params || []), ...(spec.optional_params || [])]) if (!fields.has(parameter)) { console.error(`ERROR: ${name} uses unavailable parameter ${parameter}`); failed = true; }
 }
-// Skills declare their actual calls in an intentionally tiny, auditable
-// grammar: <!-- aethis-call: aethis_tool(param_a, param_b) -->. This avoids
-// pretending to parse arbitrary Markdown while binding every prose tool
-// reference in each skill to emitted schema parameters.
+// The public skills use a deliberately bounded visible call grammar: a Call,
+// Run, or Execute clause followed by a backticked tool name; parameters are
+// backticked inline (including `flag: true`) or listed in contiguous bullets.
+// This validates the instructions users actually read, without treating it as
+// a general Markdown parser.
 for (const { path, text } of skillTexts) {
-  const contracts = [...text.matchAll(/<!--\s*aethis-call:\s*(aethis_[a-z_]+)\(([^)]*)\)\s*-->/g)]
-    .map(([, tool, parameters]) => [tool, parameters.trim() ? parameters.split(",").map((parameter) => parameter.trim()) : []]);
-  const contractedTools = new Set(contracts.map(([tool]) => tool));
-  const localRefs = new Set(text.match(/aethis_[a-z_]+/g) || []);
-  for (const tool of localRefs) if (!contractedTools.has(tool)) {
-    console.error(`ERROR: ${path} references ${tool} without an aethis-call contract.`);
-    failed = true;
+  const visibleText = text.replace(/<!--[\s\S]*?-->/g, "");
+  const calls = [];
+  for (const match of visibleText.matchAll(/\b(?:[Cc]all|[Rr]un|[Ee]xecute)\s+`?(aethis_[a-z_]+)`?([^\.\n]*)/g)) {
+    const [, tool, clause] = match;
+    calls.push([tool, [...clause.matchAll(/`([a-z][a-z0-9_]*)(?::[^`]*)?`/g)].map(([, parameter]) => parameter)]);
   }
-  for (const [tool, parameters] of contracts) {
+  for (const match of visibleText.matchAll(/\b(?:[Cc]all|[Rr]un|[Ee]xecute)\s+`?(aethis_[a-z_]+)`?[^\n]*:\n((?:\s+-\s+`[a-z][a-z0-9_]*`[^\n]*\n?)+)/g)) {
+    const [, tool, bullets] = match;
+    calls.push([tool, [...bullets.matchAll(/`([a-z][a-z0-9_]*)`/g)].map(([, parameter]) => parameter)]);
+  }
+  for (const match of visibleText.matchAll(/\b(aethis_[a-z_]+)\(([a-z0-9_,\s]*)\)/g)) {
+    const [, tool, argumentsText] = match;
+    calls.push([tool, argumentsText.trim() ? argumentsText.split(",").map((parameter) => parameter.trim()) : []]);
+  }
+  for (const [tool, parameters] of calls) {
     const fields = actual.get(tool);
     for (const parameter of parameters) {
       if (!/^[a-z][a-z0-9_]*$/.test(parameter)) { console.error(`ERROR: malformed ${tool} parameter ${parameter}`); failed = true; continue; }
@@ -62,6 +69,19 @@ for (const { path, text } of skillTexts) {
       if (!spec?.required_params?.includes(parameter) && !spec?.optional_params?.includes(parameter)) {
         console.error(`ERROR: skill call ${tool} uses undeclared parameter ${parameter}`); failed = true;
       }
+    }
+  }
+  const providerTools = new Set(calls.map(([tool]) => tool).filter((tool) => declaredByName.get(tool)?.llm_key));
+  if (providerTools.size) for (const parameter of ["anthropic_key_env", "anthropic_key_keychain"]) {
+    if (!visibleText.includes(parameter)) {
+      console.error(`ERROR: ${path} invokes provider-key tools but does not name secure reference ${parameter}.`);
+      failed = true;
+      continue;
+    }
+    for (const tool of providerTools) {
+      if (!actual.get(tool)?.has(parameter)) { console.error(`ERROR: ${tool} lacks secure provider reference ${parameter}.`); failed = true; }
+      const spec = declaredByName.get(tool);
+      if (!spec?.optional_params?.includes(parameter)) { console.error(`ERROR: ${tool} does not declare secure provider reference ${parameter}.`); failed = true; }
     }
   }
 }

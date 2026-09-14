@@ -5,15 +5,6 @@ description: Create or reuse an Aethis project, discover fields, define test-fir
 
 # Policy To Ruleset
 
-<!-- aethis-call: aethis_list_projects() -->
-<!-- aethis-call: aethis_create_ruleset(name, section_id, source_text, test_cases) -->
-<!-- aethis-call: aethis_discover_fields(project_id, anthropic_key_env, anthropic_key_keychain) -->
-<!-- aethis-call: aethis_refine_fields(project_id, feedback, anthropic_key_env, anthropic_key_keychain) -->
-<!-- aethis-call: aethis_set_tests(project_id, test_cases) -->
-<!-- aethis-call: aethis_generate_and_test(project_id, anthropic_key_env, anthropic_key_keychain) -->
-<!-- aethis-call: aethis_generation_status(project_id) -->
-<!-- aethis-call: aethis_cancel_generation(project_id, job_id, confirm_job_id) -->
-
 ## When to use
 
 Use this skill when the user wants to start rule authoring from legislation, policy, or contract text.
