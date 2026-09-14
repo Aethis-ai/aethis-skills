@@ -9,6 +9,10 @@ description: Train a rules ruleset with iterative guidance, validate outcomes, a
 
 Use this skill after ruleset creation when the user wants executable rules and a published active version.
 
+Before generation, require the exact `project_id` and confirm that its complete
+reviewed 1–100-case suite was set once with `aethis_set_tests`. Never replace a
+partial, inferred, truncated, or chunked suite to make a generation pass.
+
 ## Steps
 
 1. Run `aethis_generate_and_test` with the exact `project_id`. It usually takes 60-120 seconds.
@@ -39,9 +43,9 @@ Use this skill after ruleset creation when the user wants executable rules and a
   project ownership but does not guarantee that an already-live worker or
   provider request has stopped immediately. Both `cancelled` and idempotent
   `already_cancelled` resolve that exact cancellation request.
-- Provider keys are BYOK and per-call only. Do not store, echo, or infer a key
-  from a status/cancellation response; reuse the caller's secure per-call key
-  reference only for a requested retry.
+- Provider keys are BYOK and per-call only. Use secure host references such as
+  `anthropic_key_env` or `anthropic_key_keychain`; never store, echo, paste, or
+  infer a raw key from a status/cancellation response.
 
 ## Failure handling
 

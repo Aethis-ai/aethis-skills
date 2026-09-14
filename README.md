@@ -62,24 +62,19 @@ idempotent `already_cancelled` outcome.
 
 ### Quick setup
 
-Add the MCP server to your workspace:
+Install the MCP registration through the Aethis CLI; it stores only a selected
+profile reference and never serialises raw Aethis keys. This is the supported
+setup for both hosts:
 
 ```bash
-claude mcp add aethis -- npx -y aethis-mcp
+aethis mcp install --target claude-code
+aethis mcp install --target codex
 ```
 
-Or add a `.mcp.json` to your project root:
-
-```json
-{
-  "mcpServers": {
-    "aethis": {
-      "command": "npx",
-      "args": ["-y", "aethis-mcp"]
-    }
-  }
-}
-```
+Restart the host, install these four skills with `npx skills add
+Aethis-ai/aethis-skills -a claude-code -a codex`, then invoke a skill by name
+in either host. Anonymous setup supports public decisions; select a saved
+invited-developer profile before authoring.
 
 ## Keeping tools in sync
 
@@ -90,9 +85,9 @@ npm run check
 ```
 
 This verifies:
-1. Every `aethis_*` reference in `SKILL.md` files is declared in `tools.json`
-2. Tool count matches between `tools.json` and `aethis-mcp` registrations (drift detection)
-3. All tools have `auth` metadata
+1. Every `aethis_*` reference in the four skills is available in emitted `tools/list`
+2. Each declared dependency and parameter is available in that emitted schema
+3. Extra MCP tools are permitted because this manifest is a dependency subset
 
 When `aethis-mcp` adds or renames a tool, update `tools.json` first — the check will catch any drift or missing references.
 

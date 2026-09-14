@@ -11,20 +11,21 @@ Use this skill when the user wants to start rule authoring from legislation, pol
 
 ## Steps
 
-1. Call `aethis_list_projects` and try to reuse an existing project that matches policy scope.
-2. If reusing is unsafe or impossible, create a new ruleset with `aethis_create_ruleset` using:
+1. If the caller supplied a `project_id`, retain it throughout. Otherwise call `aethis_list_projects`. If exactly one project plausibly matches scope, ask the caller to confirm it; if several match, present their explicit IDs and ask which to continue. Create a project only after the caller confirms new work or no candidate exists.
+2. For confirmed new work, call `aethis_create_ruleset` using:
    - `name`
    - `section_id`
    - `source_text`
    - `test_cases` (at least 2-3, including one edge case)
-3. Call `aethis_discover_fields` to extract input fields from source text. Review the completeness score and missing pathways.
+3. Call `aethis_discover_fields` with that exact `project_id` to extract input fields. Review the completeness score and missing pathways.
    - If fields are missing or misnamed, call `aethis_refine_fields` with targeted feedback.
    - Repeat until recommendation is `stop` or completeness is satisfactory.
-4. Write test cases using the EXACT field names from discovery. Include them in the `aethis_create_ruleset` call or add them by recreating the ruleset.
-5. Persist identifiers from tool output and report them explicitly:
+4. Write an explicitly reviewed, authoritative complete test suite using the EXACT field names from discovery. For a reused project, do not replace tests unless the caller has reviewed the whole suite: stored expectations cannot be retrieved as an authority. Require 1–100 cases; never truncate, chunk, or make several replacement calls.
+5. Call `aethis_set_tests` once with the exact `project_id` and complete `test_cases`. It replaces the suite destructively. If its response is interrupted, inspect the project before seeking approval for another replacement; never retry automatically.
+6. Persist identifiers from tool output and report them explicitly:
    - `project_id`
    - `ruleset_id`
-6. Confirm the next action is `aethis_generate_and_test` for this exact `project_id`.
+7. Confirm the next action is `aethis_generate_and_test` for this exact `project_id`.
 
 ## Generation monitoring and recovery
 
@@ -43,9 +44,9 @@ Use this skill when the user wants to start rule authoring from legislation, pol
   or provider request has stopped immediately. Treat both `cancelled` and the
   idempotent `already_cancelled` outcome as successful resolution of that exact
   cancellation request.
-- Provider keys are bring-your-own and per-call only. Do not persist, repeat, or
-  surface a supplied key in status, cancellation, or reports. Use the caller's
-  normal secure per-call key reference again only when retrying generation.
+- Provider keys are bring-your-own and per-call only. Use only the host's secure
+  environment/keychain reference (`anthropic_key_env` or `anthropic_key_keychain`);
+  never paste, persist, repeat, or surface raw key values.
 
 ## Guardrails
 

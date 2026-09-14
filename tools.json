@@ -44,6 +44,12 @@
         "required_params": ["name", "section_id", "source_text", "test_cases"],
         "optional_params": ["domain"]
       },
+      "aethis_set_tests": {
+        "auth": "required",
+        "destructive": true,
+        "description": "Replace the complete reviewed suite for one existing project after field discovery; never retries an interrupted replacement automatically.",
+        "required_params": ["project_id", "test_cases"]
+      },
       "aethis_discover_fields": {
         "auth": "required",
         "llm_key": true,

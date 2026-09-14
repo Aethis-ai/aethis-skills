@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0 (2026-09-14)
+
+- feat: preserve selected project IDs through authoring, require one reviewed
+  complete 1–100-case suite before destructive `aethis_set_tests`, and never
+  chunk, truncate, or auto-retry an interrupted replacement. Setup guidance now
+  covers supported Claude Code and Codex profile-reference installation without
+  raw keys. Compatibility validation consumes emitted MCP `tools/list` schema
+  and permits unrelated MCP tools.
+
 ## 0.4.0 (2026-09-03)
 
 - feat: add `aethis_generation_status` and explicit-only
