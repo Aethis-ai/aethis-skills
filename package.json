@@ -8,7 +8,8 @@
     "url": "https://github.com/Aethis-ai/aethis-skills.git"
   },
   "scripts": {
-    "check": "node ./scripts/check-tool-surface.mjs"
+    "check": "node ./scripts/check-tool-surface.mjs",
+    "test": "node ./scripts/test-check-tool-surface.mjs"
   },
   "files": [
     "CHANGELOG.md",
@@ -16,6 +17,7 @@
     "README.md",
     "tools.json",
     "scripts/check-tool-surface.mjs",
+    "scripts/test-check-tool-surface.mjs",
     "skills/decide-with-trace/SKILL.md",
     "skills/policy-to-ruleset/SKILL.md",
     "skills/regression-compare/SKILL.md",
