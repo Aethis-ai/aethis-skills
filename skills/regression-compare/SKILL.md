@@ -5,6 +5,8 @@ description: Compare decision behavior between rule versions using a stable corp
 
 # Regression Compare
 
+<!-- aethis-call: aethis_decide(ruleset_id, field_values) -->
+
 ## When to use
 
 Use this skill when validating a new rule version against a baseline before or after publish.

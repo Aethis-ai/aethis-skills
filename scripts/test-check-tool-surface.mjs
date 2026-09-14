@@ -55,7 +55,19 @@ try {
   }, 1);
   check("invalid-skill-parameter", completeInventory, 1, (skillsRoot) => {
     const path = join(skillsRoot, "skills", "policy-to-ruleset", "SKILL.md");
-    writeFileSync(path, readFileSync(path, "utf8").replace("complete `test_cases`", "complete `replacement_cases`"));
+    writeFileSync(path, readFileSync(path, "utf8").replace("test_cases)", "replacement_cases)"));
+  });
+  check("missing-multiline-create-parameter", completeInventory, 1, (skillsRoot) => {
+    const path = join(skillsRoot, "skills", "policy-to-ruleset", "SKILL.md");
+    writeFileSync(path, readFileSync(path, "utf8").replace("source_text, test_cases)", "source_text, replacement_cases)"));
+  });
+  check("missing-run-parameter", completeInventory, 1, (skillsRoot) => {
+    const path = join(skillsRoot, "skills", "train-validate-publish", "SKILL.md");
+    writeFileSync(path, readFileSync(path, "utf8").replace("aethis_generate_and_test(project_id,", "aethis_generate_and_test(replacement_project_id,"));
+  });
+  check("missing-colon-parameter", completeInventory, 1, (skillsRoot) => {
+    const path = join(skillsRoot, "skills", "decide-with-trace", "SKILL.md");
+    writeFileSync(path, readFileSync(path, "utf8").replace("include_trace, include_explanation", "replacement_trace, include_explanation"));
   });
   check("undeclared-skill-tool", completeInventory, 1, (skillsRoot) => {
     const path = join(skillsRoot, "tools.json");

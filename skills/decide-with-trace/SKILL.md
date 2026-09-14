@@ -5,6 +5,12 @@ description: Run deterministic eligibility decisions with schema checks, trace o
 
 # Decide With Trace
 
+<!-- aethis-call: aethis_list_projects() -->
+<!-- aethis-call: aethis_list_rulesets(project_id) -->
+<!-- aethis-call: aethis_schema(ruleset_id) -->
+<!-- aethis-call: aethis_decide(ruleset_id, field_values, include_trace, include_explanation) -->
+<!-- aethis-call: aethis_next_question(ruleset_id, field_values) -->
+
 ## When to use
 
 Use this skill when evaluating case data against a published ruleset.
