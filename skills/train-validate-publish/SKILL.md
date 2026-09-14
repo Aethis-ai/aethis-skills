@@ -9,6 +9,10 @@ description: Train a rules ruleset with iterative guidance, validate outcomes, a
 
 Use this skill after ruleset creation when the user wants executable rules and a published active version.
 
+Before generation, require the exact `project_id` and confirm that its complete
+reviewed 1–100-case suite was set once with `aethis_set_tests`. Never replace a
+partial, inferred, truncated, or chunked suite to make a generation pass.
+
 ## Steps
 
 1. Run `aethis_generate_and_test` with the exact `project_id`. It usually takes 60-120 seconds.
@@ -32,16 +36,14 @@ Use this skill after ruleset creation when the user wants executable rules and a
 - Keep guidance narrow and tied to failing test names or clauses.
 - Avoid overfitting; stop refinement when required tests pass.
 - Never publish when tests are failing.
-- Never call `aethis_cancel_generation` as a timeout or retry mechanism. Call it
-  only after showing the exact status `job_id` and receiving fresh caller
-  confirmation to abandon that job. Pass that value as both `job_id` and
-  `confirm_job_id`; mismatch or missing confirmation makes no request. It releases
+- Never call `aethis_cancel_generation` as a timeout or retry mechanism. Call
+  `aethis_cancel_generation` only after showing the exact status `job_id` and receiving fresh caller confirmation to abandon that job, with exact `project_id` and that value as both `job_id` and `confirm_job_id`; mismatch or missing confirmation makes no request. It releases
   project ownership but does not guarantee that an already-live worker or
   provider request has stopped immediately. Both `cancelled` and idempotent
   `already_cancelled` resolve that exact cancellation request.
-- Provider keys are BYOK and per-call only. Do not store, echo, or infer a key
-  from a status/cancellation response; reuse the caller's secure per-call key
-  reference only for a requested retry.
+- Provider keys are BYOK and per-call only. Use secure host references such as
+  `anthropic_key_env` or `anthropic_key_keychain`; never store, echo, paste, or
+  infer a raw key from a status/cancellation response.
 
 ## Failure handling
 

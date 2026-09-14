@@ -44,19 +44,25 @@
         "required_params": ["name", "section_id", "source_text", "test_cases"],
         "optional_params": ["domain"]
       },
+      "aethis_set_tests": {
+        "auth": "required",
+        "destructive": true,
+        "description": "Replace the complete reviewed suite for one existing project after field discovery; never retries an interrupted replacement automatically.",
+        "required_params": ["project_id", "test_cases"]
+      },
       "aethis_discover_fields": {
         "auth": "required",
         "llm_key": true,
         "description": "Extract input fields from source text before writing tests",
         "required_params": ["project_id"],
-        "optional_params": ["anthropic_key", "openai_key"]
+        "optional_params": ["anthropic_key_env", "anthropic_key_keychain"]
       },
       "aethis_refine_fields": {
         "auth": "required",
         "llm_key": true,
         "description": "Improve field discovery with targeted feedback",
         "required_params": ["project_id", "feedback"],
-        "optional_params": ["anthropic_key", "openai_key"]
+        "optional_params": ["anthropic_key_env", "anthropic_key_keychain"]
       },
       "aethis_add_guidance": {
         "auth": "required",
@@ -68,7 +74,7 @@
         "llm_key": true,
         "description": "Generate rules and run all tests (usually 60-120s); inspect generation status before retrying a timeout",
         "required_params": ["project_id"],
-        "optional_params": ["anthropic_key", "openai_key"]
+        "optional_params": ["anthropic_key_env", "anthropic_key_keychain"]
       },
       "aethis_generation_status": {
         "auth": "required",
@@ -86,7 +92,7 @@
         "llm_key": true,
         "description": "Add optional guidance then make the minimal edit to fix failing tests, seeded from the section's active ruleset (incremental re-authoring), and re-run the full suite",
         "required_params": ["project_id"],
-        "optional_params": ["feedback", "anthropic_key", "openai_key"]
+        "optional_params": ["feedback", "anthropic_key_env", "anthropic_key_keychain"]
       },
       "aethis_publish": {
         "auth": "required",
