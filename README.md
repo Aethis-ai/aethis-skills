@@ -43,10 +43,12 @@ The canonical tool manifest is maintained in [`tools.json`](tools.json), organis
 |-------|-------|------|---------|
 | **decide** | `aethis_decide`, `aethis_schema`, `aethis_next_question`, `aethis_explain` | none | no |
 | **discover** | `aethis_list_projects`, `aethis_list_rulesets` | required | no |
-| **author** | `aethis_create_ruleset`, `aethis_discover_fields`, `aethis_refine_fields`, `aethis_add_guidance`, `aethis_generate_and_test`, `aethis_generation_status`, `aethis_cancel_generation`, `aethis_refine`, `aethis_publish` | required | some |
+| **author** | `aethis_create_ruleset`, `aethis_set_tests`, `aethis_discover_fields`, `aethis_refine_fields`, `aethis_add_guidance`, `aethis_generate_and_test`, `aethis_generation_status`, `aethis_cancel_generation`, `aethis_refine`, `aethis_publish` | required | some |
 | **manage** | `aethis_archive_project`, `aethis_archive_ruleset` | required | no |
 
-Tools marked `llm_key: true` in `tools.json` require an `anthropic_key` parameter for LLM generation.
+Tools marked `llm_key: true` in `tools.json` use an `anthropic_key_env` or
+`anthropic_key_keychain` reference for LLM generation. Do not pass a raw key as
+a tool argument: hosts retain tool arguments in their session transcripts.
 
 `aethis_generation_status` is read-only and does not need a model-provider key.
 Use it to inspect a generation timeout, lack of progress, or an error before
