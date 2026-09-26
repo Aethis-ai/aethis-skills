@@ -10,13 +10,17 @@ description: Train a rules ruleset with iterative guidance, validate outcomes, a
 Use this skill after ruleset creation when the user wants executable rules and a published active version.
 
 Before generation, require the exact `project_id` and confirm that its complete
-reviewed 1–100-case suite was set once with `aethis_set_tests`. Never replace a
-partial, inferred, truncated, or chunked suite to make a generation pass.
+reviewed suite was set once with `aethis_set_tests`. When structured
+expectations or a binding catalogue were supplied, confirm the stored
+version-1 contract before generation. Never replace a partial, inferred,
+truncated, or chunked suite to make a generation pass.
 
 ## Steps
 
 1. Run `aethis_generate_and_test` with the exact `project_id`. It usually takes 60-120 seconds.
-2. Inspect the test results returned by `aethis_generate_and_test` (shows PASS/FAIL per test with expected vs actual).
+2. Inspect the test results returned by `aethis_generate_and_test`. Success
+   means every supplied outcome and structured acceptance check passed; an
+   outcome-only pass count does not establish wider coverage.
 3. On a timeout, apparent lack of progress, or generation error, call
    `aethis_generation_status` with that same `project_id` before retrying. Read
    the job status, progress timestamps, and `error_detail.reason_code`; do not
@@ -34,7 +38,8 @@ partial, inferred, truncated, or chunked suite to make a generation pass.
   `telemetry_availability` rather than inferring worker death from heartbeat age.
   Use the same IDs and never create duplicate artifacts merely to bypass a run.
 - Keep guidance narrow and tied to failing test names or clauses.
-- Avoid overfitting; stop refinement when required tests pass.
+- Avoid overfitting; keep independently authored hold-out cases outside
+  refinement feedback and run them only after the required suite passes.
 - Never publish when tests are failing.
 - Never call `aethis_cancel_generation` as a timeout or retry mechanism. Call
   `aethis_cancel_generation` only after showing the exact status `job_id` and receiving fresh caller confirmation to abandon that job, with exact `project_id` and that value as both `job_id` and `confirm_job_id`; mismatch or missing confirmation makes no request. It releases

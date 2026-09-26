@@ -42,13 +42,14 @@
         "auth": "required",
         "description": "Create a ruleset with source text and test cases (TDD)",
         "required_params": ["name", "section_id", "source_text", "test_cases"],
-        "optional_params": ["domain"]
+        "optional_params": ["domain", "contract_version", "expected_review_bindings"]
       },
       "aethis_set_tests": {
         "auth": "required",
         "destructive": true,
         "description": "Replace the complete reviewed suite for one existing project after field discovery; never retries an interrupted replacement automatically.",
-        "required_params": ["project_id", "test_cases"]
+        "required_params": ["project_id", "test_cases"],
+        "optional_params": ["contract_version", "expected_review_bindings"]
       },
       "aethis_discover_fields": {
         "auth": "required",
