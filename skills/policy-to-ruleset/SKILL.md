@@ -17,11 +17,13 @@ Use this skill when the user wants to start rule authoring from legislation, pol
    - `section_id`
    - `source_text`
    - `test_cases` (at least 2-3, including one edge case)
+   - when supplied, preserve `contract_version: 1` and
+     `expected_review_bindings` with each test case's structured expectations.
 3. Call `aethis_discover_fields` with that exact `project_id` to extract input fields. Review the completeness score and missing pathways.
    - If fields are missing or misnamed, call `aethis_refine_fields` with targeted feedback.
    - Repeat until recommendation is `stop` or completeness is satisfactory.
-4. Write an explicitly reviewed, authoritative complete test suite using the EXACT field names from discovery. For a reused project, do not replace tests unless the caller has reviewed the whole suite: stored expectations cannot be retrieved as an authority. Require 1–100 cases; never truncate, chunk, or make several replacement calls.
-5. Call `aethis_set_tests` once with the exact `project_id` and complete `test_cases`. It replaces the suite destructively. If its response is interrupted, inspect the project before seeking approval for another replacement; never retry automatically.
+4. Write an explicitly reviewed, authoritative complete test suite using the EXACT field names from discovery. Preserve every supplied scenario expectation and review-binding catalogue unchanged. For a reused project, do not replace tests unless the caller has reviewed the whole suite: stored expectations cannot be retrieved as an authority. Never truncate, chunk, or make several replacement calls.
+5. Call `aethis_set_tests` once with the exact `project_id` and complete `test_cases`. When structured expectations or a binding catalogue are supplied, include `contract_version: 1` and `expected_review_bindings` unchanged. It replaces the suite destructively and must confirm the stored contract before generation. If its response is interrupted, inspect the project before seeking approval for another replacement; never retry automatically.
 6. Persist identifiers from tool output and report them explicitly:
    - `project_id`
    - `ruleset_id`
@@ -52,6 +54,8 @@ Use this skill when the user wants to start rule authoring from legislation, pol
 - Be deterministic: once IDs exist, never switch targets by name matching.
 - Be idempotent: retries should not create duplicate rulesets.
 - Do not change test expectations without policy-text evidence.
+- Keep independently authored hold-out cases outside refinement feedback; use
+  them only to evaluate the completed ruleset.
 - If assumptions were made when selecting a project, state them with the IDs used.
 
 ## Failure handling

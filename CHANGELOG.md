@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 (2026-09-26)
+
+- feat: preserve optional structured acceptance contracts in the public
+  authoring workflows. The skills now declare the version and review-binding
+  parameters, retain supplied scenario checks through creation and replacement,
+  and require every supplied check to pass before success or publication.
+  Independent hold-out cases remain outside refinement feedback.
+
 ## 0.5.0 (2026-09-14)
 
 - feat: preserve selected project IDs through authoring, require one reviewed
